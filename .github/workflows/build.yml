@@ -1,0 +1,28 @@
+name: Build unsigned IPA
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: macos-15
+    steps:
+      - uses: actions/checkout@v4
+      - name: Install XcodeGen
+        run: brew install xcodegen
+      - name: Generate Xcode project
+        run: xcodegen generate
+      - name: Build
+        run: |
+          xcodebuild -project PhotoDateRestore.xcodeproj             -scheme PhotoDateRestore             -sdk iphoneos             -configuration Release             -derivedDataPath build             CODE_SIGNING_ALLOWED=NO             build
+      - name: Package unsigned IPA
+        run: |
+          mkdir -p Payload
+          cp -R build/Build/Products/Release-iphoneos/PhotoDateRestore.app Payload/
+          zip -r PhotoDateRestore-unsigned.ipa Payload
+      - uses: actions/upload-artifact@v4
+        with:
+          name: PhotoDateRestore-unsigned
+          path: PhotoDateRestore-unsigned.ipa
