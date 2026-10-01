@@ -1,0 +1,21 @@
+name: PhotoDateRestore
+options:
+  bundleIdPrefix: com.jianghust
+  deploymentTarget:
+    iOS: "17.0"
+targets:
+  PhotoDateRestore:
+    type: application
+    platform: iOS
+    sources:
+      - PhotoDateRestore
+    settings:
+      base:
+        PRODUCT_BUNDLE_IDENTIFIER: com.jianghust.PhotoDateRestore
+        PRODUCT_NAME: PhotoDateRestore
+        SWIFT_VERSION: 5.0
+        GENERATE_INFOPLIST_FILE: YES
+        INFOPLIST_KEY_NSPhotoLibraryUsageDescription: "读取照片的当前日期、原始日期和 EXIF 拍摄日期，用于预览恢复结果。"
+        INFOPLIST_KEY_NSPhotoLibraryAddUsageDescription: "将用户选中照片的日期恢复为确认后的原始拍摄日期。"
+        TARGETED_DEVICE_FAMILY: "1,2"
+        CODE_SIGNING_ALLOWED: NO
